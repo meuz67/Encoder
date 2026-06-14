@@ -9,7 +9,7 @@ func NewEndpoint() *Endpoint {
 		Alphabet: "abcdefghijklmnopqrstuvwxyz1234567890",
 	}
 }
-func (e *Endpoint) MoveText(shift int) string {
+func (e *Endpoint) MoveText(shift int, text string) string {
 	runeAlphabet := []rune(e.Alphabet)
 	var result []rune
 	for i := 0; i < shift; i++ {
