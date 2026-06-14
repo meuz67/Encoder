@@ -1,8 +1,12 @@
 package main
 
-import "main/internal/app/pkg"
+import (
+	"main/internal/app/pkg"
+	"main/internal/app/service"
+)
 
 func main() {
-	a := pkg.App{}
+	s := service.NewService()
+	a := pkg.New(s)
 	a.Run()
 }
