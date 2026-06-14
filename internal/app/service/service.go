@@ -1,9 +1,10 @@
 package service
 
 import (
-	"main/internal/app/endpoint"
 	"net/http"
 	"strconv"
+
+	"main/internal/app/endpoint"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,17 +22,20 @@ func NewService() *Service {
 		e: endpoint.NewEndpoint(),
 	}
 }
+
 func (s *Service) Shift(c *gin.Context) {
-	var json RequestData
-	if err := c.ShouldBindJSON(json); err != nil {
+	var req RequestData
+	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	shiftStr := c.Param("shift")
 	shiftInt, err := strconv.Atoi(shiftStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	var answer RequestData
-	answer.Message = s.e.MoveText(shiftInt, json.Message)
+	answer.Message = s.e.MoveText(shiftInt, req.Message)
 	c.JSON(http.StatusOK, answer)
 }

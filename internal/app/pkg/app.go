@@ -7,18 +7,17 @@ import (
 )
 
 type App struct {
-	s service.Service
+	s *service.Service
 }
 
-func New(s service.Service) *App {
+func New(s *service.Service) *App {
 	return &App{
 		s: s,
 	}
 }
+
 func (a *App) Run() {
 	router := gin.Default()
-	router.GET("/cipther/:shift", a.s.Shift)
-	if err := router.Run(":8080"); err != nil {
-		panic(err)
-	}
+	router.POST("/cipher/:shift", a.s.Shift)
+	router.Run(":8080")
 }
